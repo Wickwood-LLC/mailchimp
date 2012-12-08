@@ -62,8 +62,8 @@ function mailchimp_lists_menu() {
     'access arguments' => array(1),
   );
   $items['mailchimp/subscribe'] = array(
-    'title' => 'Newsletter Subscription',
-    'description' => 'Present all available free form newsletter subscriptions.',
+    'title' => 'Updates on Activities',
+    'description' => 'Subscription Page for Joining Larry\'s Email List.',
     'page callback' => 'mailchimp_lists_freeform_subscribe_page',
     'access callback' => 'mailchimp_lists_freeform_subscribe_page_access',
     'type' => MENU_SUGGESTED_ITEM,
