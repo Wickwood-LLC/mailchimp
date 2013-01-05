@@ -1,7 +1,8 @@
 name = MailChimp
-description = MailChimp email service integration.
+description = MailChimp email service integration.  Modified for Larry Wittner's website.
 package = MailChimp
 core = 7.x
+version = 2.7-wwm-lw
 
 files[] = MCAPI.class.php
 files[] = includes/mailchimp.drush.inc

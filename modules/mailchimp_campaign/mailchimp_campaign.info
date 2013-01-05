@@ -2,6 +2,7 @@ name = MailChimp Campaigns
 description = Create, send and import MailChimp campaigns.
 package = MailChimp
 core = 7.x
+version = 2.7-wwm-lw
 
 dependencies[] = mailchimp_lists
 dependencies[] = entity
