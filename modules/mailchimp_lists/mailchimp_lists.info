@@ -2,6 +2,8 @@ name = MailChimp Lists
 description = Manage and integrate MailChimp lists.
 package = MailChimp
 core = 7.x
+version = 2.7-wwm
+
 dependencies[] = mailchimp
 dependencies[] = entity
 dependencies[] = entity_token
