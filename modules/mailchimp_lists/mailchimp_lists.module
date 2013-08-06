@@ -334,8 +334,8 @@ function mailchimp_lists_user_sync($account, $old_email = '', $new_email = '', $
             $valid_role = TRUE;
           }
         }
-        // remove the user if they do not have a valid role
-        if(!$valid_role) {
+        // remove the user if they do not have a valid role or if email (new or old) is invaild
+        if(!$valid_role || stripos($old_email, 'nomail.invalid') || stripos($new_email, 'nomail.invalid')) {
           // queue up for cron processing
           if ($list->settings['cron']) {
             $queue = DrupalQueue::get(MAILCHIMP_QUEUE_CRON);
@@ -348,6 +348,7 @@ function mailchimp_lists_user_sync($account, $old_email = '', $new_email = '', $
           }
           // process immediately
           else {
+            dsm("immediately removing $account->uid");
             mailchimp_unsubscribe_user($list, $old_email, FALSE, NULL, TRUE);
           }
         }
@@ -355,44 +356,46 @@ function mailchimp_lists_user_sync($account, $old_email = '', $new_email = '', $
     }
   }
 
-  // Add subscriptions if necessary
+  // Add subscriptions if necessary if email is valid 
   $lists = mailchimp_lists_get_available_lists($account, array(MAILCHIMP_LISTTYPE_REQUIRED, MAILCHIMP_LISTTYPE_OPTIONAL));
-  if (!empty($lists)) {
-    $mcapi = mailchimp_get_api_object();
-    foreach ($lists as $list) {
-      if ($account->status) {
-        // queue up for cron processing
-        if ($list->settings['cron']) {
-          $queue = DrupalQueue::get(MAILCHIMP_QUEUE_CRON);
-          $queue->createQueue();
-          $queue->createItem(array(
-            'uid' => $account->uid,
-            'list_id' => $list->id,
-            'op' => 'add',
-          ));
-        }
-        // process immediately
-        else {
-          // grab merge values
-          $mergevars = mailchimp_lists_load_user_mergevars($account, $list);
-          // set the EMAIL merge var if an email address is being updated
-          if (!empty($new_email)) {
-            $mergevars['EMAIL'] = $new_email;
-          }
-          // Include interest groups.
-          if (!empty($old_email) && !empty($list->settings['include_interest_groups'])) {
-            $memberinfo = mailchimp_get_memberinfo($list->mc_list_id, $old_email);
-            $mergevars['GROUPINGS'] = $memberinfo['merges']['GROUPINGS'];
-          }
-          if (!empty($old_email) && mailchimp_is_subscribed($list->mc_list_id, $old_email)) {
-            mailchimp_update_user($list, $old_email, $mergevars, FALSE, $mcapi);
-          }
-          else {
-            mailchimp_subscribe_user($list, $account->mail, $mergevars, FALSE, $mcapi);
-          }
-        }
-      }
-    }
+  if (stripos($account->mail, 'nomail.invalid') == FALSE) {
+  	if (!empty($lists)) {
+			$mcapi = mailchimp_get_api_object();
+			foreach ($lists as $list) {
+				if ($account->status) {
+					// queue up for cron processing
+					if ($list->settings['cron']) {
+						$queue = DrupalQueue::get(MAILCHIMP_QUEUE_CRON);
+						$queue->createQueue();
+						$queue->createItem(array(
+							'uid' => $account->uid,
+							'list_id' => $list->id,
+							'op' => 'add',
+						));
+					}
+					// process immediately
+					else {
+						// grab merge values
+						$mergevars = mailchimp_lists_load_user_mergevars($account, $list);
+						// set the EMAIL merge var if an email address is being updated
+						if (!empty($new_email)) {
+							$mergevars['EMAIL'] = $new_email;
+						}
+						// Include interest groups.
+						if (!empty($old_email) && !empty($list->settings['include_interest_groups'])) {
+							$memberinfo = mailchimp_get_memberinfo($list->mc_list_id, $old_email);
+							$mergevars['GROUPINGS'] = $memberinfo['merges']['GROUPINGS'];
+						}
+						if (!empty($old_email) && mailchimp_is_subscribed($list->mc_list_id, $old_email)) {
+							mailchimp_update_user($list, $old_email, $mergevars, FALSE, $mcapi);
+						}
+						else {
+							mailchimp_subscribe_user($list, $account->mail, $mergevars, FALSE, $mcapi);
+						}
+					}
+				}
+			}
+		}	
   }
 }
 

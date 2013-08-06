@@ -1,5 +1,5 @@
 name = MailChimp Lists
-description = Manage and integrate MailChimp lists.
+description = Manage and integrate MailChimp lists. Modified by WWM to not sync invalid emails
 package = MailChimp
 core = 7.x
 dependencies[] = mailchimp
@@ -12,7 +12,7 @@ files[] = mailchimp_lists.entity.inc
 files[] = mailchimp_lists.admin.inc
 
 ; Information added by drupal.org packaging script on 2013-01-29
-version = "7.x-2.10"
+version = "7.x-2.10-wwm"
 core = "7.x"
 project = "mailchimp"
 datestamp = "1359482747"
