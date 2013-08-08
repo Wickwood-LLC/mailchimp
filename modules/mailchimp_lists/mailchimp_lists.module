@@ -348,7 +348,7 @@ function mailchimp_lists_user_sync($account, $old_email = '', $new_email = '', $
           }
           // process immediately
           else {
-            dsm("immediately removing $account->uid");
+            //dsm("immediately removing $account->uid");
             mailchimp_unsubscribe_user($list, $old_email, FALSE, NULL, TRUE);
           }
         }
