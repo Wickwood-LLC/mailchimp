@@ -1,17 +1,13 @@
 name = MailChimp
-description = MailChimp email service integration.
+description = MailChimp email service integration. WWM modified MailChimp Lists sub-module to not sync invalid emails designated with nomail.invalid
 package = MailChimp
 core = 7.x
+version = "7.x-2.12-wwm-dev"
 
 files[] = includes/mailchimp.inc
+files[] = tests/mailchimp_tests.inc
 
 dependencies[] = libraries (>=2)
 
 configure = admin/config/services/mailchimp
-
-; Information added by drupal.org packaging script on 2013-01-29
-version = "7.x-2.10"
-core = "7.x"
-project = "mailchimp"
-datestamp = "1359482747"
 
