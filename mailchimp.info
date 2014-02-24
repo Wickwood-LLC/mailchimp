@@ -2,7 +2,7 @@ name = MailChimp
 description = MailChimp email service integration. WWM modified MailChimp Lists sub-module to not sync invalid emails designated with nomail.invalid
 package = MailChimp
 core = 7.x
-version = "7.x-2.12-wwm-dev"
+version = "7.x-2.x-dev-wwm"
 
 files[] = includes/mailchimp.inc
 files[] = tests/mailchimp_tests.inc
