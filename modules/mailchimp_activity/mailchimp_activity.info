@@ -2,6 +2,7 @@ name = MailChimp Activity
 description = View activity for an email address associated with any entity.
 package = MailChimp
 core = 7.x
+version = 2.12-wwm-lw
 
 dependencies[] = mailchimp
 dependencies[] = entity
