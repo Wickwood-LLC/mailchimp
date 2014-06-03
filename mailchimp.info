@@ -4,7 +4,9 @@ package = MailChimp
 core = 7.x
 version = 2.7-wwm-lw
 
-files[] = MCAPI.class.php
-files[] = includes/mailchimp.drush.inc
+files[] = includes/mailchimp.inc
+files[] = tests/mailchimp_tests.inc
+
+dependencies[] = libraries (>=2)
 
 configure = admin/config/services/mailchimp
