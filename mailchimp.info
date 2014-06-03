@@ -2,7 +2,7 @@ name = MailChimp
 description = MailChimp email service integration.  Modified for Larry Wittner's website.
 package = MailChimp
 core = 7.x
-version = 2.7-wwm-lw
+version = 2.12-wwm-lw
 
 files[] = includes/mailchimp.inc
 files[] = tests/mailchimp_tests.inc
