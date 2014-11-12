@@ -256,18 +256,25 @@ function mailchimp_signup_subscribe_form($form, &$form_state, $signup, $type) {
 
   $list = array();
   if ($lists_count > 0) {
+    $mailchimp_list_checkbox_default = 0;
+    $mailchimp_list_checkbox_wrapper_class = "";
+    if ($lists_count === 1) {
+      // only one list hide checkbox and make it checked by default
+      $mailchimp_list_checkbox_default = 1;
+      $mailchimp_list_checkbox_wrapper_class = " element-hidden";
+    }
     foreach ($lists as $list) {
       // Wrap in a div:
       $wrapper_key = 'mailchimp_' . $list['web_id'];
       $form['mailchimp_lists'][$wrapper_key] = array(
-        '#prefix' => '<div id="mailchimp-newsletter-' . $list['web_id'] . '" class="mailchimp-newsletter-wrapper">',
+        '#prefix' => '<div id="mailchimp-newsletter-' . $list['web_id'] . '" class="mailchimp-newsletter-wrapper'.$mailchimp_list_checkbox_wrapper_class.'">',
         '#suffix' => '</div>',
       );
       $form['mailchimp_lists'][$wrapper_key]['subscribe'] = array(
         '#type' => 'checkbox',
         '#title' => $list['name'],
         '#return_value' => $list['id'],
-        '#default_value' => 0,
+        '#default_value' => $mailchimp_list_checkbox_default ? $list['id'] : 0,
       );
       if ($signup->settings['include_interest_groups'] && isset($list['intgroups'])) {
         $form['mailchimp_lists'][$wrapper_key]['interest_groups'] = array(
