@@ -5,9 +5,8 @@ core = 7.x
 version = "7.x-2.12-wwm-dev"
 dependencies[] = mailchimp
 dependencies[] = entity
-dependencies[] = entity_token
+dependencies[] = options
 
 configure = admin/config/services/mailchimp/lists
 
-files[] = lib/mailchimp_lists.entity.inc
 files[] = tests/mailchimp_lists.test

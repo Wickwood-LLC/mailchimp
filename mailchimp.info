@@ -5,9 +5,9 @@ core = 7.x
 version = "7.x-2.x-dev-wwm"
 
 files[] = includes/mailchimp.inc
-files[] = tests/mailchimp_tests.inc
+files[] = tests/mailchimp_test.inc
 
-dependencies[] = libraries (>=2)
+dependencies[] = libraries (>=2.0)
 
 configure = admin/config/services/mailchimp
 
