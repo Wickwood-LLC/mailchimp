@@ -137,7 +137,7 @@ function mailchimp_lists_field_instance_settings_form($field, $instance) {
   }
 
   return $form;
-  dsm($form)
+  dsm($form);
 }
 
 /**
