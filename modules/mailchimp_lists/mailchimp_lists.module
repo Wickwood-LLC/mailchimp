@@ -383,6 +383,16 @@ function _mailchimp_lists_mergevars_populate($mergefields, $entity, $entity_type
         $object = $object->{$element};
       }
       $mergevars[$label] = isset($object) ? $object->value() : NULL;
+      if (is_array($mergevars[$label])) {
+        // Array values cannot be passed to to MailChimp. So, convert it to
+        // single value using token replacement.
+        // This fix is mainly targetting to convert user roles array (which
+        // ontain array of integers) to comma seperated role names.
+        $replaced = token_generate($entity_type, array($property => $label), array($entity_type => $entity));
+        if (isset($replaced[$label])) {
+          $mergevars[$label] = $replaced[$label];
+        }
+      }
     }
   }
   drupal_alter('mailchimp_lists_mergevars', $mergevars, $entity, $entity_type);
